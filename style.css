@@ -34,7 +34,7 @@ body {
     height: 15%;
     width: 100%;
     color: rgb(32, 32, 32);
-    font-family: 'Impact';
+    font-family: "Bebas Neue", sans-serif;
     font-size: 50px;
 }
 
@@ -60,7 +60,7 @@ body {
 .grid-container button {
     border: none;
     border-radius: 15px;
-    font-family: Impact;
+    font-family: "Bebas Neue", sans-serif;
     font-size: clamp(12px, 2.5vw, 18px);
 
     text-align: center;
@@ -94,7 +94,7 @@ body {
 .Solution {
     z-index: 10;
     border-radius: 15px;
-    font-family: 'Impact';
+    font-family: "Bebas Neue", sans-serif;
     font-size: 25px;
     display: flex;
     justify-content: center;
@@ -174,7 +174,7 @@ body {
     background-color: rgb(255, 255, 251);
     color: rgb(32, 32, 32);
     cursor: pointer;
-    font-family: 'Impact';
+    font-family: "Bebas Neue", sans-serif;
     font-size: 30px;
     
 }
@@ -191,6 +191,6 @@ body {
     background-color: rgb(78, 78, 78);
     color: rgb(32, 32, 32);
     cursor: pointer;
-    font-family: 'Impact';
+    font-family: "Bebas Neue", sans-serif;
     font-size: 30px;
 }
