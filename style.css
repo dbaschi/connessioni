@@ -8,6 +8,7 @@
 
 body {
     font-family: "Bebas Neue", sans-serif;
+
     display: flex;
     position:relative;
     background-color: rgb(255, 255, 251);
@@ -19,9 +20,9 @@ body {
     justify-content: center;
     text-align:center;
     align-items: center;
-    left:10%;
-    height: 900px;
-    width:80%;
+    left:2%; 
+    height: 700px;
+    width:96%;
 
 }
 
@@ -32,16 +33,16 @@ body {
     text-align:center;
     align-items: center;
     top:0%;
-    height: 10%;
+    height: 15%;
     width: 100%;
     color: rgb(32, 32, 32);
-    font-family: "Bebas Neue", sans-serif;
+    font-family: 'Impact';
     font-size: 50px;
 }
 
 #top {
     position: absolute;
-    top: 10%;
+    top: 15%;
     height: 60%;
     width: 100%;
 }
@@ -60,7 +61,7 @@ body {
 
 .grid-container button {
     border: none;
-    border-radius: 15px;
+    border-radius: 10px;
     font-family: "Bebas Neue", sans-serif;
     font-size: clamp(18px, 2.5vw, 22px);
 
@@ -144,7 +145,7 @@ body {
     position: absolute;
     display:flex;
     gap:30px;
-    top: 70%;
+    top: 75%;
     height: 10%;
     width: 100%;
     justify-content: center;
@@ -156,8 +157,8 @@ body {
 #bottom {
     position: absolute;
     display:flex;
-    gap: 30px;
-    top: 80%; /* same as .top height */
+    gap: 10px;
+    top: 85%; /* same as .top height */
     height: 10%;
     width: 100%;
     justify-content: center;
@@ -167,15 +168,15 @@ body {
 }
 
 .commandBtn {
-    border: 2px solid black;
-    height: 100px;
-    width: 300px;
+    border: 1px solid black;
+    height: 50px;
+    width: 170px;
     border-radius: 50px;
     background-color: rgb(255, 255, 251);
     color: rgb(32, 32, 32);
     cursor: pointer;
     font-family: "Bebas Neue", sans-serif;
-    font-size: 30px;
+    font-size: 20px;
     
 }
 
@@ -191,6 +192,6 @@ body {
     background-color: rgb(78, 78, 78);
     color: rgb(32, 32, 32);
     cursor: pointer;
-    font-family: "Bebas Neue", sans-serif;
+    font-family: 'Impact';
     font-size: 30px;
 }
