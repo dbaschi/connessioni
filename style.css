@@ -60,13 +60,17 @@ body {
 .grid-container button {
     border: none;
     border-radius: 15px;
+    font-family: Impact;
+    font-size: clamp(12px, 2.5vw, 18px);
+
+    text-align: center;
+    white-space: normal;
+    word-break: break-word;
     height: 100%;
     width: 100%;
     background-color: rgb(238, 238, 233);
     color: rgb(32, 32, 32);
     cursor: pointer;
-    font-family: 'Impact';
-    font-size: 135%;
     transition: top 1.2s ease-out;
     transition:
         textContent 0.5 ease,
