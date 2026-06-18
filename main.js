@@ -200,7 +200,13 @@ function shuffle(){
 document.getElementById("shuffleBtn").addEventListener("click", () => {
     shuffle();
 });
-
+document.getElementById("removeBtn").addEventListener("click", () => {
+  const buttons = Array.from(grid.children);
+  buttons.forEach(btn => btn.classList.remove("active"));
+  selections=0;
+  max=0;
+    
+});
 document.getElementById("submitBtn").addEventListener("click", () => {
   const buttons = Array.from(grid.children);
   var classes = [];
