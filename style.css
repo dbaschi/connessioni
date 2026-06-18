@@ -7,6 +7,7 @@
 
 
 body {
+    font-family: "Bebas Neue", sans-serif;
     display: flex;
     position:relative;
     background-color: rgb(255, 255, 251);
