@@ -32,7 +32,7 @@ body {
     text-align:center;
     align-items: center;
     top:0%;
-    height: 15%;
+    height: 10%;
     width: 100%;
     color: rgb(32, 32, 32);
     font-family: "Bebas Neue", sans-serif;
@@ -41,7 +41,7 @@ body {
 
 #top {
     position: absolute;
-    top: 15%;
+    top: 10%;
     height: 60%;
     width: 100%;
 }
@@ -144,7 +144,7 @@ body {
     position: absolute;
     display:flex;
     gap:30px;
-    top: 75%;
+    top: 70%;
     height: 10%;
     width: 100%;
     justify-content: center;
@@ -157,7 +157,7 @@ body {
     position: absolute;
     display:flex;
     gap: 30px;
-    top: 85%; /* same as .top height */
+    top: 80%; /* same as .top height */
     height: 10%;
     width: 100%;
     justify-content: center;
