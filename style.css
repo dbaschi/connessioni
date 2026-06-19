@@ -5,7 +5,6 @@
 }
 
 
-
 body {
     font-family: "Bebas Neue", sans-serif;
 
@@ -33,7 +32,7 @@ body {
     text-align:center;
     align-items: center;
     top:0%;
-    height: 15%;
+    height: 10%;
     width: 100%;
     color: rgb(32, 32, 32);
     font-family: 'Impact';
@@ -101,7 +100,8 @@ body {
     align-items: center;
     transition:
         opacity 1.2s ease,
-        color 0.5s ease;
+        color 0.9s ease;
+        
 }
 
 /* 4x1 bars */
@@ -181,7 +181,7 @@ body {
 .grid-container button.active {
     background-color: rgb(32, 32, 32);
     color: rgb(238, 238, 233);
-    transform: scale(0.97);
+    transform: scale(0.98);
 }
 
 .solved {
@@ -192,4 +192,29 @@ body {
     cursor: pointer;
     font-family: 'Impact';
     font-size: 30px;
+}
+
+.toast {
+    position: fixed;
+    top: 7%;
+    width: 100%;
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 20px;
+    justify-content: center;
+    text-align:center;
+    align-items: center;
+
+    color: rgb(32, 32, 32);
+    padding: 12px 18px;
+    border-radius: 8px;
+    z-index: 999999;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateY(0);
 }
