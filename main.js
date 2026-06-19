@@ -25,7 +25,7 @@ var dd = String(today.getDate()).padStart(2, '0');
 var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
 var yyyy = today.getFullYear();
 
-today = '20' + '_' + mm + '_' + yyyy;
+today = dd + '_' + mm + '_' + yyyy;
 
 
 const snapshot = await get(ref(db, today));
