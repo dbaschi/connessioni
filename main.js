@@ -32,7 +32,7 @@ const snapshot = await get(ref(db, today));
 const data = snapshot.val();
 
 const cat = Object.keys(data);
-const categories = cat.flatMap(str => str.replace(" ", "+"));
+const categories = cat.flatMap(str => str.replaceAll(" ", "+"));
 const sus = Object.values(data);
 const words = sus.flatMap(str => str.split(", "));
 
@@ -50,7 +50,7 @@ function Solve(matchedButtons,cleanClass,categories, document, solutions, colorA
     const index = categories.indexOf(cleanClass);
     console.log("qui");
     console.log(cat);
-    let sos= categories.flatMap(str => str.replace("+", " "));
+    let sos= categories.flatMap(str => str.replaceAll("+", " "));
      // Mark them as solved
     matchedButtons.forEach(btn => {
         btn.classList.remove("active");
