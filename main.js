@@ -32,7 +32,7 @@ const snapshot = await get(ref(db, today));
 const data = snapshot.val();
 
 const cat = Object.keys(data);
-const categories = cat.flatMap(str => str.splice(1).replaceAll(" ", "+"));
+const categories = cat.flatMap(str => str.slice(1).replaceAll(" ", "+"));
 const sus = Object.values(data);
 const words = sus.flatMap(str => str.split(", "));
 
