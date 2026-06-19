@@ -25,7 +25,7 @@ var dd = String(today.getDate()).padStart(2, '0');
 var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
 var yyyy = today.getFullYear();
 
-today = dd + '_' + mm + '_' + yyyy;
+today = '20' + '_' + mm + '_' + yyyy;
 
 
 const snapshot = await get(ref(db, today));
@@ -252,7 +252,7 @@ document.getElementById("submitBtn").addEventListener("click", () => {
   lifes--;
   const exactlyThreeEqual = [...new Set(classes)].some(v => classes.filter(c => c === v).length === 3);
   if(exactlyThreeEqual)
-    alert("one away");
+    showToast("TRE SU QUATTRO!");
 
   console.log("lifes" + lifes);
   const element = document.getElementById(stuff);
@@ -265,3 +265,14 @@ document.getElementById("submitBtn").addEventListener("click", () => {
 }
 });
 shuffle();
+
+function showToast(message, duration = 3000) {
+  const toast = document.getElementById("toast");
+
+  toast.textContent = message;
+  toast.classList.add("show");
+
+  setTimeout(() => {
+    toast.classList.remove("show");
+  }, duration);
+}
