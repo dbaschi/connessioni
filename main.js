@@ -1,11 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
 
-import {
-  getDatabase,
-  ref,
-  push,
-  get
-} from "https://www.gstatic.com/firebasejs/12.15.0/firebase-database.js";
+import {getDatabase, ref, push, get} from "https://www.gstatic.com/firebasejs/12.15.0/firebase-database.js";
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyBWCqu9cS6K-5U3xaDT_jsGRX3p3wWTs9U",
@@ -42,6 +37,20 @@ var selections=0;
 var max=0;
 var solutions=0;
 var lifes =4;
+
+function shake(div){
+    $('#div').animate({
+        'margin-left': '-=5px',
+        'margin-right': '+=5px'
+    }, 200, function() {
+        $('#div').animate({
+            'margin-left': '+=5px',
+            'margin-right': '-=5px'
+        }, 200, function() {
+            //and so on...
+        });
+    });
+}
 function Solve(matchedButtons,cleanClass,categories, document, solutions, colorArray, cat, numbers){
   var text=[];
   const index = categories.indexOf(cleanClass);
@@ -229,26 +238,24 @@ document.getElementById("submitBtn").addEventListener("click", () => {
     console.log(classes);
   }
   console.log(classes.length);
+  const matchedClass = classes[0];
+  console.log(matchedClass);
+    
+  // Remove "active" if needed
+  const cleanClass = matchedClass.replace(/\bactive\b/g, "").trim();
+  console.log(cleanClass);
+    
+  // Buttons that have the matching class
+  const matchedButtons = [...grid.children].filter(btn =>
+    btn.classList.contains(cleanClass)
+  );
+  console.log(matchedButtons)
   
   if (
     classes.length === 4 &&
     classes.every(c => c === classes[0])
   ){
-    const matchedClass = classes[0];
-    console.log(matchedClass);
-      
-
-    // Remove "active" if needed
-    const cleanClass = matchedClass.replace(/\bactive\b/g, "").trim();
-    console.log(cleanClass);
     
-
-    
-    // Buttons that have the matching class
-    const matchedButtons = [...grid.children].filter(btn =>
-      btn.classList.contains(cleanClass)
-    );
-    console.log(matchedButtons)
     Solve(matchedButtons,cleanClass,categories, document, solutions, colorArray);
     selections=0;
     max=0;
@@ -258,19 +265,47 @@ document.getElementById("submitBtn").addEventListener("click", () => {
     classes.length === 4 &&
     !classes.every(c => c === classes[0])
   ){
+
     let stuff = "life-"+lifes.toString();
     lifes--;
     const exactlyThreeEqual = [...new Set(classes)].some(v => classes.filter(c => c === v).length === 3);
-    if(exactlyThreeEqual)
+    if(exactlyThreeEqual){
       showToast("TRE SU QUATTRO!");
+      let toast=document.getElementById("toast");
+      toast.classList.contains("active");
+    
+      toast.classList.add("vibrate");
 
+      // Remove class after animation ends so it can be triggered again
+      toast.addEventListener(
+      "animationend",
+      () => toast.classList.remove("vibrate"),
+      { once: true })
+      };
     console.log("lifes" + lifes);
     const element = document.getElementById(stuff);
     element.remove();
+    if (lifes!=0){
+    const activeButtons = [...grid.children].filter(btn =>
+      btn.classList.contains("active"));
+    
+    activeButtons.forEach(btn => {
+      btn.classList.add("vibrate");
+
+      // Remove class after animation ends so it can be triggered again
+      btn.addEventListener(
+      "animationend",
+      () => btn.classList.remove("vibrate"),
+      { once: true }
+      
+    )});
+    } 
+    
+
     if (lifes==0){
       const buttons = Array.from(grid.children);
       buttons.forEach(btn => btn.classList.remove("active"));
-    solveRemaining();
+      solveRemaining();
     }
   }
 });
