@@ -204,7 +204,7 @@ body {
     text-align:center;
     align-items: center;
 
-    color: rgb(32, 32, 32);
+    color: rgb(183, 31, 31);
     padding: 12px 18px;
     border-radius: 8px;
     z-index: 999999;
@@ -217,4 +217,16 @@ body {
 .toast.show {
     opacity: 1;
     transform: translateY(0);
+}
+
+.vibrate {
+  animation: vibrate 0.2s linear 3;
+}
+
+@keyframes vibrate {
+  0%   { transform: translateX(0); }
+  25%  { transform: translateX(-3px); }
+  50%  { transform: translateX(3px); }
+  75%  { transform: translateX(-3px); }
+  100% { transform: translateX(0); }
 }
