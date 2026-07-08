@@ -15,15 +15,33 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
-var today = new Date();
-var dd = String(today.getDate()).padStart(2, '0');
-var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-var yyyy = today.getFullYear();
 
-today = dd + '_' + mm + '_' + yyyy;
+function formatDate(date) {
+    const dd = String(date.getDate()).padStart(2, '0');
+    const mm = String(date.getMonth() + 1).padStart(2, '0');
+    const yyyy = date.getFullYear();
+    return `${dd}_${mm}_${yyyy}`;
+}
+
+let date = new Date();
+let snapshot;
+
+while (true) {
+    const path = formatDate(date);
+    snapshot = await get(ref(db, path));
+
+    if (snapshot.exists()) {
+        console.log(`Found data for ${path}`);
+        console.log(snapshot.val());
+        break;
+    }
+
+    // Go back one day
+    date.setDate(date.getDate() - 1);
+}
 
 
-const snapshot = await get(ref(db, today));
+
 const data = snapshot.val();
 
 const cat = Object.keys(data);
@@ -47,15 +65,12 @@ function shake(div){
             'margin-left': '+=5px',
             'margin-right': '-=5px'
         }, 200, function() {
-            //and so on...
         });
     });
 }
 function Solve(matchedButtons,cleanClass,categories, document, solutions, colorArray, cat, numbers){
   var text=[];
   const index = categories.indexOf(cleanClass);
-  console.log("qui");
-  console.log(cat);
   let sos= categories.flatMap(str => str.replaceAll("+", " "));
 
   // Mark them as solved
@@ -68,7 +83,6 @@ function Solve(matchedButtons,cleanClass,categories, document, solutions, colorA
       document.getElementById("one").style.opacity = "1.0";
       document.getElementById("one").style.backgroundColor = colorArray[index];
       document.getElementById("one").innerHTML = sos[index]+ "<br>"+ text;
-      console.log("punto");
     }
     if (solutions===1){
       btn.classList.add("second") 
@@ -169,7 +183,6 @@ function showToast(message, duration = 3000) {
     toast.classList.remove("show");
   }, duration);
 }
-//Word buttons
 
 const colorArray = ["#e2de5d","#7dc27d", "#969dea","#dc75e7"];
 for (let i = 1; i <= 16; i++) {
@@ -195,8 +208,7 @@ for (let i = 1; i <= 16; i++) {
         max=1;
       else 
         max=0;
-    
-      console.log(selections);
+
     }
   });
   grid.appendChild(btn);
@@ -235,21 +247,16 @@ document.getElementById("submitBtn").addEventListener("click", () => {
   for (let i = buttons.length-1; i >=0; i--) {
     if (buttons[i].className.includes("active"))
       classes.push(buttons[i].className);
-    console.log(classes);
   }
-  console.log(classes.length);
   const matchedClass = classes[0];
-  console.log(matchedClass);
-    
+
   // Remove "active" if needed
   const cleanClass = matchedClass.replace(/\bactive\b/g, "").trim();
-  console.log(cleanClass);
-    
+
   // Buttons that have the matching class
   const matchedButtons = [...grid.children].filter(btn =>
     btn.classList.contains(cleanClass)
   );
-  console.log(matchedButtons)
   
   if (
     classes.length === 4 &&
