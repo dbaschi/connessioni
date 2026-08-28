@@ -79,8 +79,6 @@ body {
     cursor: pointer;
 }
 
-
-
 #game {
     position: relative;
     display:flex;
@@ -90,7 +88,6 @@ body {
     left:2%; 
     height: 700px;
     width:96%;
-
 }
 
 #title {
@@ -104,7 +101,7 @@ body {
     width: 100%;
     color: rgb(32, 32, 32);
     font-family: "Bebas Neue", sans-serif;
-    font-size: 20px;
+    font-size: 30px;
 }
 
 .indietroBtn {
