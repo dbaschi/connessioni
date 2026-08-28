@@ -6,17 +6,34 @@
     <title>CONNESSIONI</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
-    <meta name="google-site-verification" content="yyNKdreH-YGCL0bZdD19PGb9pzVQ-Bh8sfDfy3quR4g" />
 </head>
 <body background-color="grey">
-    <div id="toast" class="toast">
-  Tre su quattro!
-</div>
-    <div id="container">
-        <div id="title">CONNESSIONI</div>
+
+    <div id="landing">Connessioni
+        <button id="giocaBtn" class="landingBtn">Gioca</button>
+        <button id="archivioBtn" class="landingBtn">Archivio</button>
+    </div>
+    
+    <div id="archive" style="display:none">
+        <button class="indietroBtn">⬅</button>
+        <div></div>
+        <div id="daysContainer">
+            ARCHIVIO
+        </div>
+    </div>
+    
+    <div id="game" style="display:none">
+
+        <div id="toast" class="toast">
+            Tre su quattro!
+        </div>
+        <button class="indietroBtn">⬅</button>
+        <div id="title">
+            crea 4 gruppi di 4 parole
+        </div>
+
         <div id="top">
-            <div id="grid" class="grid-container">
-            </div>
+            <div id="grid" class="grid-container"></div>
             <div class="overlay-layer">
                 <div id="one" class="Solution"></div>
                 <div id="two" class="Solution"></div>
@@ -24,18 +41,23 @@
                 <div id="four" class="Solution"></div>
             </div>
         </div>
+
         <div id="mid">
             <div id="life-1" class="lifes"></div>
             <div id="life-2" class="lifes"></div>
             <div id="life-3" class="lifes"></div>
             <div id="life-4" class="lifes"></div>
         </div>
+
         <div id="bottom">
             <button id="shuffleBtn" class="commandBtn">mescola</button>
             <button id="removeBtn" class="commandBtn">deseleziona</button>
             <button id="submitBtn" class="commandBtn">invia</button>
+            
         </div>
     </div>
-    <script src = "main.js" type="module"></script>    
+    
+    <script src = "main.js" type="module"></script>   
+
 </body>
 </html>
