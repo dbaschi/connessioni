@@ -23,7 +23,10 @@ function formatDate(date) {
     return `${dd}_${mm}_${yyyy}`;
 }
 
+const first_date = new Date(2026, 5, 18)
 let date = new Date();
+const today = date;
+
 let snapshot;
 
 while (true) {
@@ -40,21 +43,160 @@ while (true) {
     date.setDate(date.getDate() - 1);
 }
 
+document.getElementById("giocaBtn").onclick = () => {
+  document.body.style.backgroundColor= 'rgb(' + [255,255,251].join(',') + ')';
+  document.getElementById("landing").style.display = "none";
+  document.getElementById("archive").style.display = "none";
+  document.getElementById("game").style.display = "flex";
+  game(snapshot);
+};
 
+const indietroBtn = document.querySelectorAll(".indietroBtn");
+
+indietroBtn.forEach(element => {
+  element.addEventListener("click", () => {
+    document.body.style.backgroundColor= 'rgb(' + [152, 203, 136].join(',') + ')';
+    document.getElementById("landing").style.display = "flex";
+    document.getElementById("archive").style.display = "none";
+    document.getElementById("game").style.display = "none";
+  });
+})
+
+document.getElementById("archivioBtn").onclick = () => {
+  document.getElementById("landing").style.display = "none";
+  document.getElementById("archive").style.display = "flex";
+  document.getElementById("game").style.display = "none";
+  loadDays();
+};
+
+/*
+const btn = document.getElementById("calendarBtn");
+const picker = document.getElementById("datePicker");
+const output = document.getElementById("selectedDate");
+
+
+// Display date
+output.textContent = formatDate(date).replaceAll("_", "/");
+
+btn.addEventListener("click", () => {
+  picker.showPicker();
+});
+
+picker.addEventListener("change", async () => {
+  const [year, month, day] = picker.value.split("-").map(Number);
+  const date = new Date(year, month - 1, day);
+  if(date>today)
+    date.setDate(today.getDate);
+  if (date<first_date){
+    alert("il primo connessioni è del 18/06/2026")
+    date.setDate(first_date.getDate());
+  }
+  let snapshot;
+
+  while (true) {
+    const path = formatDate(date);
+    snapshot = await get(ref(db, path));
+
+    if (snapshot.exists()) {
+      console.log(`Found data for ${path}`);
+      console.log(snapshot.val());
+      break;
+    }
+
+    // Go back one day
+    date.setDate(date.getDate() - 1);
+  }
+  output.textContent = formatDate(date).replaceAll("_", "/");
+
+  game(snapshot);
+});
+
+*/
+const daysContainer = document.getElementById("days");
+
+let currentDate = new Date();
+let loading = false;
+
+async function loadDays(amount = 100) {
+
+    if (loading) return;
+
+    loading = true;
+
+    for (let i = 0; i < amount; i++) {
+
+        const date = new Date(currentDate);
+        
+        const path = formatDate(date);
+
+        const snapshot = await get(ref(db, path));
+
+        if (snapshot.exists()) {
+
+            createDayElement(date, snapshot);
+
+        }
+
+        // Giorno precedente
+        currentDate.setDate(currentDate.getDate() - 1);
+    }
+
+    loading = false;
+}
+function createDayElement(date, snapshot) {
+
+  const button = document.createElement("button");
+  button.classList.add("day");
+  const daysContainer=document.getElementById("daysContainer");
+
+  const dateText = document.createElement("h2");
+
+  button.textContent = formatDate(date).replaceAll("_", "/");
+
+  button.addEventListener("click", () => {
+    document.body.style.backgroundColor= 'rgb(' + [255,255,251].join(',') + ')';
+    document.getElementById("landing").style.display = "none";
+    document.getElementById("archive").style.display = "none";
+    document.getElementById("game").style.display = "flex";
+
+    game(snapshot);   
+  });
+
+  daysContainer.appendChild(button);
+}
+
+
+function game(snapshot){
+  const grid = document.getElementById("grid");
+  grid.innerHTML = "";
+
+  // Reset solution panels
+  ["one","two","three","four"].forEach(id => {
+    const el = document.getElementById(id);
+    el.innerHTML = "";
+    el.style.opacity = "0";
+    el.style.backgroundColor = "";
+  });
+
+ 
+  const life_lost = document.querySelectorAll(".lost");
+
+life_lost.forEach(element => {
+    element.classList.remove("lost");
+});
 
 const data = snapshot.val();
-
 const cat = Object.keys(data);
 const categories = cat.flatMap(str => str.slice(1).replaceAll(" ", "+"));
 const sus = Object.values(data);
 const words = sus.flatMap(str => str.split(", "));
 
 
-const grid = document.getElementById("grid");
 var selections=0;
 var max=0;
 var solutions=0;
 var lifes =4;
+
 
 function shake(div){
     $('#div').animate({
@@ -229,18 +371,18 @@ function shuffle(){
 }
 
 //Action buttons
-document.getElementById("shuffleBtn").addEventListener("click", () => {
+document.getElementById("shuffleBtn").onclick = () => {
   shuffle();
-});
+};
 
-document.getElementById("removeBtn").addEventListener("click", () => {
+document.getElementById("removeBtn").onclick = () => {
   const buttons = Array.from(grid.children);
   buttons.forEach(btn => btn.classList.remove("active"));
   selections=0;
   max=0;
-});
+};
 
-document.getElementById("submitBtn").addEventListener("click", () => {
+document.getElementById("submitBtn").onclick = () => {
   const buttons = Array.from(grid.children);
   var classes = [];
   // Get active button class
@@ -291,7 +433,7 @@ document.getElementById("submitBtn").addEventListener("click", () => {
       };
     console.log("lifes" + lifes);
     const element = document.getElementById(stuff);
-    element.remove();
+    element.classList.add("lost");
     if (lifes!=0){
     const activeButtons = [...grid.children].filter(btn =>
       btn.classList.contains("active"));
@@ -315,6 +457,9 @@ document.getElementById("submitBtn").addEventListener("click", () => {
       solveRemaining();
     }
   }
-});
+};
 
 shuffle();
+}
+game(snapshot);
+
