@@ -48,7 +48,7 @@ document.getElementById("giocaBtn").onclick = () => {
   document.getElementById("landing").style.display = "none";
   document.getElementById("archive").style.display = "none";
   document.getElementById("game").style.display = "flex";
-  game(snapshot);
+  game(date, snapshot);
 };
 
 const indietroBtn = document.querySelectorAll(".indietroBtn");
@@ -69,55 +69,13 @@ document.getElementById("archivioBtn").onclick = () => {
   loadDays();
 };
 
-/*
-const btn = document.getElementById("calendarBtn");
-const picker = document.getElementById("datePicker");
-const output = document.getElementById("selectedDate");
-
-
-// Display date
-output.textContent = formatDate(date).replaceAll("_", "/");
-
-btn.addEventListener("click", () => {
-  picker.showPicker();
-});
-
-picker.addEventListener("change", async () => {
-  const [year, month, day] = picker.value.split("-").map(Number);
-  const date = new Date(year, month - 1, day);
-  if(date>today)
-    date.setDate(today.getDate);
-  if (date<first_date){
-    alert("il primo connessioni è del 18/06/2026")
-    date.setDate(first_date.getDate());
-  }
-  let snapshot;
-
-  while (true) {
-    const path = formatDate(date);
-    snapshot = await get(ref(db, path));
-
-    if (snapshot.exists()) {
-      console.log(`Found data for ${path}`);
-      console.log(snapshot.val());
-      break;
-    }
-
-    // Go back one day
-    date.setDate(date.getDate() - 1);
-  }
-  output.textContent = formatDate(date).replaceAll("_", "/");
-
-  game(snapshot);
-});
-
-*/
 const daysContainer = document.getElementById("days");
 
 let currentDate = new Date();
 let loading = false;
 
-async function loadDays(amount = 100) {
+async function loadDays(amount = 80) {
+  document.getElementById("caricamento").style.display = "inline";
 
     if (loading) return;
 
@@ -140,6 +98,7 @@ async function loadDays(amount = 100) {
         // Giorno precedente
         currentDate.setDate(currentDate.getDate() - 1);
     }
+    document.getElementById("caricamento").style.display = "none";
 
     loading = false;
 }
@@ -148,6 +107,7 @@ function createDayElement(date, snapshot) {
   const button = document.createElement("button");
   button.classList.add("day");
   const daysContainer=document.getElementById("daysContainer");
+  const caricamento=document.getElementById("caricamento");
 
   const dateText = document.createElement("h2");
 
@@ -159,14 +119,15 @@ function createDayElement(date, snapshot) {
     document.getElementById("archive").style.display = "none";
     document.getElementById("game").style.display = "flex";
 
-    game(snapshot);   
+    game(date, snapshot);   
   });
 
   daysContainer.appendChild(button);
+  daysContainer.insertBefore(button, caricamento);
 }
 
 
-function game(snapshot){
+function game(giorno, snapshot){
   const grid = document.getElementById("grid");
   grid.innerHTML = "";
 
@@ -191,7 +152,9 @@ const categories = cat.flatMap(str => str.slice(1).replaceAll(" ", "+"));
 const sus = Object.values(data);
 const words = sus.flatMap(str => str.split(", "));
 
-
+const firma=document.getElementById("data");
+console.log(formatDate(giorno));
+firma.textContent="Connessione del giorno: " + formatDate(giorno).replaceAll("_","/");
 var selections=0;
 var max=0;
 var solutions=0;
@@ -461,5 +424,5 @@ document.getElementById("submitBtn").onclick = () => {
 
 shuffle();
 }
-game(snapshot);
+game(date, snapshot);
 
