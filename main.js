@@ -11,7 +11,7 @@ const firebaseConfig = {
   messagingSenderId: "940358109080",
   appId: "1:940358109080:web:01a1e1932b95a1e4ea4ded"
 };
-
+console.log("here");
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
@@ -33,7 +33,7 @@ function toDisplayDate(dateString) {
 const first_date = new Date(2026, 5, 18)
 let date = new Date();
 const today = date;
-
+console.log("this");
 let snapshot;
 
 while (true) {
@@ -49,7 +49,7 @@ while (true) {
     // Go back one day
     date.setDate(date.getDate() - 1);
 }
-
+console.log("there");
 document.getElementById("giocaBtn").onclick = () => {
   document.body.style.backgroundColor= 'rgb(' + [255,255,251].join(',') + ')';
   document.getElementById("landing").style.display = "none";
