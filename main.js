@@ -78,6 +78,7 @@ document.getElementById("archivioBtn").onclick = () => {
 
 
 async function loadDays(today) {
+document.getElementById("caricamento").style.display="inline";
 const todayKey = formatDate(today);
 
 const q = query(
@@ -94,7 +95,6 @@ snapshot.forEach(child => {
   puzzles.push(child);
 });
 
-// Newest → oldest
 puzzles.reverse();
 
 puzzles.forEach(child => {
@@ -120,6 +120,7 @@ puzzles.forEach(child => {
 
   daysContainer.insertBefore(button, caricamento);
 });
+  document.getElementById("caricamento").style.display="none";
 };
 function game(giorno, snapshot){
   const grid = document.getElementById("grid");
