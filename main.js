@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
 
-import {getDatabase, ref, set, get,remove, query, orderByKey, limitToLast, endAt} from "https://www.gstatic.com/firebasejs/12.15.0/firebase-database.js";
+import {getDatabase, ref, get, query, orderByKey, limitToLast, endAt} from "https://www.gstatic.com/firebasejs/12.15.0/firebase-database.js";
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyBWCqu9cS6K-5U3xaDT_jsGRX3p3wWTs9U",
@@ -419,3 +419,4 @@ document.getElementById("submitBtn").onclick = () => {
 shuffle();
 }
 game(formatDate(date), snapshot);
+
