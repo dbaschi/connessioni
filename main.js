@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
 
-import {getDatabase, ref, push, get} from "https://www.gstatic.com/firebasejs/12.15.0/firebase-database.js";
+import {getDatabase, ref, set, get,remove, query, orderByKey, limitToLast, endAt} from "https://www.gstatic.com/firebasejs/12.15.0/firebase-database.js";
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyBWCqu9cS6K-5U3xaDT_jsGRX3p3wWTs9U",
@@ -16,11 +16,18 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
+
+
 function formatDate(date) {
     const dd = String(date.getDate()).padStart(2, '0');
     const mm = String(date.getMonth() + 1).padStart(2, '0');
     const yyyy = date.getFullYear();
-    return `${dd}_${mm}_${yyyy}`;
+    return `${yyyy}_${mm}_${dd}`;
+}
+
+function toDisplayDate(dateString) {
+  const [yyyy, mm, dd] = dateString.split("_");
+  return `${dd}_${mm}_${yyyy}`;
 }
 
 const first_date = new Date(2026, 5, 18)
@@ -48,7 +55,7 @@ document.getElementById("giocaBtn").onclick = () => {
   document.getElementById("landing").style.display = "none";
   document.getElementById("archive").style.display = "none";
   document.getElementById("game").style.display = "flex";
-  game(date, snapshot);
+  game(formatDate(date), snapshot);
 };
 
 const indietroBtn = document.querySelectorAll(".indietroBtn");
@@ -66,52 +73,41 @@ document.getElementById("archivioBtn").onclick = () => {
   document.getElementById("landing").style.display = "none";
   document.getElementById("archive").style.display = "flex";
   document.getElementById("game").style.display = "none";
-  loadDays();
+  loadDays(today);
 };
 
-const daysContainer = document.getElementById("days");
 
-let currentDate = new Date();
-let loading = false;
+async function loadDays(today) {
+const todayKey = formatDate(today);
 
-async function loadDays(amount = 80) {
-  document.getElementById("caricamento").style.display = "inline";
+const q = query(
+    ref(db),
+    orderByKey(),
+    endAt(todayKey),
+    limitToLast(80)
+);
 
-    if (loading) return;
+const snapshot = await get(q);
+const puzzles = [];
 
-    loading = true;
+snapshot.forEach(child => {
+  puzzles.push(child);
+});
 
-    for (let i = 0; i < amount; i++) {
+// Newest → oldest
+puzzles.reverse();
 
-        const date = new Date(currentDate);
-        
-        const path = formatDate(date);
-
-        const snapshot = await get(ref(db, path));
-
-        if (snapshot.exists()) {
-
-            createDayElement(date, snapshot);
-
-        }
-
-        // Giorno precedente
-        currentDate.setDate(currentDate.getDate() - 1);
-    }
-    document.getElementById("caricamento").style.display = "none";
-
-    loading = false;
-}
-function createDayElement(date, snapshot) {
-
-  const button = document.createElement("button");
+puzzles.forEach(child => {
+    console.log(child.key);
+    console.log(child.val());
+    const button = document.createElement("button");
   button.classList.add("day");
   const daysContainer=document.getElementById("daysContainer");
   const caricamento=document.getElementById("caricamento");
 
   const dateText = document.createElement("h2");
 
-  button.textContent = formatDate(date).replaceAll("_", "/");
+  button.textContent = toDisplayDate(child.key).replaceAll("_", "/");
 
   button.addEventListener("click", () => {
     document.body.style.backgroundColor= 'rgb(' + [255,255,251].join(',') + ')';
@@ -119,14 +115,12 @@ function createDayElement(date, snapshot) {
     document.getElementById("archive").style.display = "none";
     document.getElementById("game").style.display = "flex";
 
-    game(date, snapshot);   
+    game(child.key, child);   
   });
 
-  daysContainer.appendChild(button);
   daysContainer.insertBefore(button, caricamento);
-}
-
-
+});
+};
 function game(giorno, snapshot){
   const grid = document.getElementById("grid");
   grid.innerHTML = "";
@@ -149,12 +143,12 @@ life_lost.forEach(element => {
 const data = snapshot.val();
 const cat = Object.keys(data);
 const categories = cat.flatMap(str => str.slice(1).replaceAll(" ", "+"));
-const sus = Object.values(data);
-const words = sus.flatMap(str => str.split(", "));
+const wrd = Object.values(data);
+const words = wrd.flatMap(str => str.split(", "));
 
 const firma=document.getElementById("data");
-console.log(formatDate(giorno));
-firma.textContent="Connessione del giorno: " + formatDate(giorno).replaceAll("_","/");
+
+firma.textContent="Connessione del giorno: " + toDisplayDate(giorno).replaceAll("_","/");
 var selections=0;
 var max=0;
 var solutions=0;
@@ -424,5 +418,4 @@ document.getElementById("submitBtn").onclick = () => {
 
 shuffle();
 }
-game(date, snapshot);
-
+game(formatDate(date), snapshot);
